@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="OS1-64">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="OSDome-64">
   <xacro:property name="M_PI" value="3.1415926535897931" />
-  <xacro:macro name="OS1-64" params="*origin parent:=base_link name:=os1_sensor topic_points:=/os1_cloud_node/points topic_imu:=/os1_cloud_node/imu hz:=10 lasers:=64 samples:=512 min_range:=0.9 max_range:=75.0 noise:=0.008 min_angle:=-${M_PI} max_angle:=${M_PI} lidar_link:=os1_lidar imu_link:=os1_imu vfov_min:=-.26 vfov_max:=.26 gpu:=false">
+  <xacro:macro name="OSDome-64" params="*origin parent:=base_link name:=osdome_sensor topic_points:=/osdome_cloud_node/points topic_imu:=/osdome_cloud_node/imu hz:=10 lasers:=64 samples:=512 min_range:=0.5 max_range:=40.0 noise:=0.008 min_angle:=-${M_PI} max_angle:=${M_PI} lidar_link:=osdome_lidar imu_link:=osdome_imu vfov_min:=-1.4835 vfov_max:=0.0 gpu:=false">
 
     <joint name="${name}_mount_joint" type="fixed">
       <xacro:insert_block name="origin" /> 
@@ -47,13 +47,14 @@
     <joint name="${name}_lidar_link_joint" type="fixed">
       <parent link="${name}" />
       <child link="${lidar_link}" />
+      <!--<origin xyz="0.0 0.0 0.03618" rpy="3.14159 0 0" />-->
       <origin xyz="0.0 0.0 0.03618" rpy="0 0 0" />
     </joint>
 
     <!-- Gazebo requires the ouster_gazebo_plugins package -->
     <gazebo reference="${name}">
       <xacro:if value="${gpu}">
-        <sensor type="gpu_ray" name="${name}-OS1-64">
+        <sensor type="gpu_ray" name="${name}-OSDome-64">
           <pose>0 0 0 0 0 0</pose>
           <visualize>false</visualize>
           <update_rate>${hz}</update_rate>
@@ -88,7 +89,7 @@
         </sensor>
       </xacro:if>
       <xacro:unless value="${gpu}">
-        <sensor type="ray" name="${name}-OS1-64">
+        <sensor type="ray" name="${name}-OSDome-64">
           <pose>0 0 0 0 0 0</pose>
           <visualize>false</visualize>
           <update_rate>${hz}</update_rate>

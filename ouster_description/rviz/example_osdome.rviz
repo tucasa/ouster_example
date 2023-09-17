@@ -61,11 +61,11 @@ Visualization Manager:
           Value: true
         base_link:
           Value: true
-        os1_imu:
+        osdome_imu:
           Value: true
-        os1_lidar:
+        osdome_lidar:
           Value: true
-        os1_sensor:
+        osdome_sensor:
           Value: true
       Marker Scale: 1
       Name: TF
@@ -75,10 +75,10 @@ Visualization Manager:
       Tree:
         base_footprint:
           base_link:
-            os1_sensor:
-              os1_imu:
+            osdome_sensor:
+              osdome_imu:
                 {}
-              os1_lidar:
+              osdome_lidar:
                 {}
       Update Interval: 0
       Value: true
@@ -101,15 +101,15 @@ Visualization Manager:
           Show Axes: false
           Show Trail: false
           Value: true
-        os1_imu:
+        osdome_imu:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        os1_lidar:
+        osdome_lidar:
           Alpha: 1
           Show Axes: false
           Show Trail: false
-        os1_sensor:
+        osdome_sensor:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -143,7 +143,7 @@ Visualization Manager:
       Size (Pixels): 3
       Size (m): 0.009999999776482582
       Style: Points
-      Topic: /os1_cloud_node/points
+      Topic: /osdome_cloud_node/points
       Unreliable: false
       Use Fixed Frame: true
       Use rainbow: true
@@ -176,7 +176,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/XYOrbit
-      Distance: 9.166513442993164
+      Distance: 14.423686027526855
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -191,10 +191,10 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.8303981423377991
+      Pitch: 0.4553990364074707
       Target Frame: os1_lidar
       Value: XYOrbit (rviz)
-      Yaw: 0.7653982043266296
+      Yaw: 0.4803985059261322
     Saved: ~
 Window Geometry:
   Displays:
