@@ -20,7 +20,7 @@
         <geometry>
           <cylinder>
             <length>0.08527</length>
-            <radius>0.036</radius>
+            <radius>0.03600</radius>
           </cylinder>
         </geometry>
       </collision>
@@ -63,11 +63,11 @@
         <plugin name='gazebo_ros_laser_controller' filename='libgazebo_ros_ouster_gpu_laser.so'>
           <topicName>/osdome_cloud_node/points</topicName>
           <frameName>osdome_lidar</frameName>
-          <min_range>0.04</min_range>
+          <min_range>0.001</min_range>
           <max_range>40.0</max_range>
           <gaussianNoise>0.008</gaussianNoise>
         </plugin>
-        <pose frame=''>0 0 0.047824 0 -0 0</pose>
+        <pose frame=''>0 0 0.08527 0 -0 0</pose>
       </sensor>
     </link>
     <static>0</static>

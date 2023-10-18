@@ -1,20 +1,63 @@
-[![Docker Stars](https://img.shields.io/docker/stars/wilselby/ouster_example.svg)](https://hub.docker.com/r/wilselby/ouster_example/)
-[![Docker Pulls](https://img.shields.io/docker/pulls/wilselby/ouster_example.svg)](https://hub.docker.com/r/wilselby/ouster_example/)
-[![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/wilselby/ouster_example/blob/master/LICENSE)
-[![Build Status](https://travis-ci.org/wilselby/ouster_example.svg?branch=master)](https://travis-ci.org/wilselby/ouster_example)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fwilselby%2Fouster_example.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fwilselby%2Fouster_example?ref=badge_shield)
+# OS1-64 and OSDome LiDAR Simulation in Gazebo
 
-# OS-1 Example Code
-Sample code for connecting to and configuring the OS-1, reading and visualizing
-data, and interfacing with ROS.
+## Introduction
 
-See the `README.md` in each subdirectory for details.
+This repository is a fork of the original [Ouster Example Repository](https://github.com/wilselby/ouster_example). It extends the Gazebo simulation models to include support for the [OSDome sensor](https://ouster.com/jp/products/scanning-lidar/osdome-sensor/).
 
-## Contents
-* [ouster_client/](ouster_client/README.md) contains an example C++ client for the OS-1 sensor
-* [ouster_viz/](ouster_viz/README.md) contains a visualizer for the OS-1 sensor
-* [ouster_ros/](ouster_ros/README.md) contains example ROS nodes for publishing point cloud messages
+<p align="center">
+  <img src="./img/os1_64.png" alt="OS1-64" width="45%">
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="./img/osdome.png" alt="OSDome" width="45%">
+</p>
 
-## Sample Data
-* Sample sensor output usable with the provided ROS code is available
-  [here](https://data.ouster.io/sample-data-1.10)
+<p align="center">
+  <img src="./img/os1_64_rviz.png" alt="OS1-64_rviz" width="45%">
+  &nbsp; &nbsp; &nbsp; &nbsp;
+  <img src="./img/osdome_rviz.png" alt="OSDome_rviz" width="45%">
+</p>
+
+
+
+## Additional Features
+
+- **GPU Acceleration**: This fork adds support for GPU acceleration, enhancing simulation efficiency and speed.
+- **Per-Point Timestamps**: The point cloud data now includes a `t` field, simulating the timestamp for each point. This is achieved by evenly dividing the time from the start to the end of a single scan.
+- **Extended SDF Files**: Additional `.sdf` files have been added to `ouster_description/models` for Gazebo simulation.
+
+## Installation
+
+To install, clone the repository and build it using `catkin build`:
+
+```bash
+cd your_workspace
+git clone https://github.com/tucasa/ouster_example.git
+cd ouseter_example
+catkin build
+```
+
+## Usage Examples
+
+### OS1-64
+
+To launch the Gazebo simulation with the OS1-64 model, use:
+
+```bash
+roslaunch ouster_description os1_world.launch
+```
+
+### OSDome
+
+To launch the Gazebo simulation with the OSDome model, use:
+
+```bash
+roslaunch ouster_description osdome_world.launch
+```
+
+### GPU Support
+
+To enable GPU acceleration, add the `gpu:=true` argument to the roslaunch command.
+
+## References
+
+The CAD model for the OSDome sensor can be found on Ouster's [official page](https://ouster.com/downloads/).
+
