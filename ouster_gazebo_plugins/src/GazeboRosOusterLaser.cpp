@@ -259,11 +259,11 @@ void GazeboRosOusterLaser::OnScan(ConstLaserScanStampedPtr& _msg)
   const double MAX_RANGE = std::min(max_range_, maxRange);
 
   // Populate message fields
-  const uint32_t POINT_STEP = 32;
+  const uint32_t POINT_STEP = 34;
   sensor_msgs::PointCloud2 msg;
   msg.header.frame_id = frame_name_;
   msg.header.stamp = ros::Time(_msg->time().sec(), _msg->time().nsec());
-  msg.fields.resize(6);
+  msg.fields.resize(9);
   msg.fields[0].name = "x";
   msg.fields[0].offset = 0;
   msg.fields[0].datatype = sensor_msgs::PointField::FLOAT32;
@@ -280,14 +280,26 @@ void GazeboRosOusterLaser::OnScan(ConstLaserScanStampedPtr& _msg)
   msg.fields[3].offset = 16;
   msg.fields[3].datatype = sensor_msgs::PointField::FLOAT32;
   msg.fields[3].count = 1;
-  msg.fields[4].name = "ring";
+  msg.fields[4].name = "t";
   msg.fields[4].offset = 20;
-  msg.fields[4].datatype = sensor_msgs::PointField::UINT16;
+  msg.fields[4].datatype = sensor_msgs::PointField::UINT32;
   msg.fields[4].count = 1;
-  msg.fields[5].name = "t";
-  msg.fields[5].offset = 22;
-  msg.fields[5].datatype = sensor_msgs::PointField::FLOAT32;
+  msg.fields[5].name = "reflectivity";
+  msg.fields[5].offset = 24;
+  msg.fields[5].datatype = sensor_msgs::PointField::UINT16;
   msg.fields[5].count = 1;
+  msg.fields[6].name = "ring";
+  msg.fields[6].offset = 26;
+  msg.fields[6].datatype = sensor_msgs::PointField::UINT8;
+  msg.fields[6].count = 1;
+  msg.fields[7].name = "ambient";
+  msg.fields[7].offset = 28;
+  msg.fields[7].datatype = sensor_msgs::PointField::UINT16;
+  msg.fields[7].count = 1;
+  msg.fields[8].name = "range";
+  msg.fields[8].offset = 30;
+  msg.fields[8].datatype = sensor_msgs::PointField::UINT32;
+  msg.fields[8].count = 1;
   msg.data.resize(verticalRangeCount * rangeCount * POINT_STEP);
 
   int i, j;
@@ -335,12 +347,15 @@ void GazeboRosOusterLaser::OnScan(ConstLaserScanStampedPtr& _msg)
         *((float*)(ptr + 8)) = -r * sin(pAngle);
 #endif
         *((float*)(ptr + 16)) = intensity;
+        *((uint32_t*)(ptr + 20)) = 0.1 * std::fmod((yAngle + 2 * M_PI) / (2 * M_PI), 1.0) * 1000000000; // time  T * angle / (2*pi)
+        *((uint16_t*)(ptr + 24)) = intensity;
 #if GAZEBO_MAJOR_VERSION > 2
-        *((uint16_t*)(ptr + 20)) = j; // ring
+        *((uint8_t*)(ptr + 26)) = j; // ring
 #else
-        *((uint16_t*)(ptr + 20)) = verticalRangeCount - 1 - j; // ring
+        *((uint8_t*)(ptr + 26)) = verticalRangeCount - 1 - j; // ring
 #endif
-        *((float*)(ptr + 22)) = 0.1 * std::fmod((-2 * M_PI - yAngle) / (2 * M_PI), -1.0); // time  T * angle / (2*pi)
+        *((uint16_t*)(ptr + 28)) = intensity;
+        *((uint32_t*)(ptr + 30)) = r * 1000;  // millimeter
         ptr += POINT_STEP;
       }
     }

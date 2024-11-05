@@ -54,6 +54,8 @@ Visualization Manager:
       Value: true
     - Class: rviz/TF
       Enabled: true
+      Filter (blacklist): ""
+      Filter (whitelist): ""
       Frame Timeout: 15
       Frames:
         All Enabled: true
@@ -127,7 +129,7 @@ Visualization Manager:
         Min Value: -10
         Value: true
       Axis: Z
-      Channel Name: t
+      Channel Name: ring
       Class: rviz/PointCloud2
       Color: 255; 255; 255
       Color Transformer: Intensity
